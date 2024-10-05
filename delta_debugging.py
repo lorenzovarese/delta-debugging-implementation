@@ -65,36 +65,35 @@ def delta_debugging(html_content: str) -> str:
     Returns:
         str: The minimal HTML content that still contains the bug.
     """
-    n = 2  # Start with n = 2
+    n = 2  # Start with n = 2 and 𝝙 (CF) as test
     while True:
-        # Split the content into n parts
         parts = split_into_parts(html_content, n)
         
-        # Test each part
+        # Test each 𝝙i and each ∇i
         for i in range(len(parts)):
-            # Test part i
+            # Test 𝝙i
             if bug_is_present(parts[i]):
-                # Case 3a: Some i causes failure
+                # Case 3a: Some 𝝙i causes failure: Goto 1 with 𝝙 = 𝝙i and n = 2
                 html_content = parts[i]  # Narrow down the input
                 n = 2  # Reset granularity
                 break
-            # Test the complement of part i (all other parts except parts[i])
+            # Test ∇i
             complement = ""
             for j in range(len(parts)):
                 if j != i:
                     complement += parts[j]
             if bug_is_present(complement):
-                # Case 3b: Some ∇i causes failure
+                # Case 3b: Some ∇i causes failure: Goto 1 with 𝝙 = ∇i and n = n - 1
                 html_content = complement  # Narrow down to the complement
                 n = n - 1  # Reduce granularity
                 break
         else:
-            # Case 3c: No test causes failure
+            # Case 3c: No test causes failure:
             if 2 * n <= len(html_content):
-                # Increase granularity and continue
+                # If granularity can be redefined (n*2 <= |𝝙|), go to step 1 with 𝝙 = 𝝙 and n = n * 2
                 n = n * 2
             else:
-                # Done, return the minimal content
+                # Otherwise: Done, return the 1-minimum test
                 return html_content
 
 def main(file_path: str) -> None:
