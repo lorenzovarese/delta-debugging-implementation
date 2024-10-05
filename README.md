@@ -4,12 +4,7 @@ Student: Lorenzo Varese
 
 This project contains an implementation of the Delta Debugging algorithm in Python. The algorithm aims to minimize the input that triggers a specific bug in an HTML file (e.g., the presence of a `<SELECT>` tag).
 
-## Prerequisites
-
-- Python 3.x
-- The `argparse` module is used for command-line argument parsing (included in standard Python libraries).
-
-## Usage
+**Prerequisites**: Python 3.x
 
 To use the delta debugging implementation, follow the instructions below:
 
